@@ -1,7 +1,7 @@
 .section .vector_table,"a",%progbits
 vector_table:
 	.word  _kernelStackTop
-	.word  ResetHandler
+	.word  Reset_Handler
 	.word  NMI_Handler
 	.word  HardFault_Handler
 	.word  MemManage_Handler

@@ -293,6 +293,21 @@
               <FileType>5</FileType>
               <FilePath>.\Source\stm32f407.inc</FilePath>
             </File>
+            <File>
+              <FileName>CortexM4.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Source\CortexM4.inc</FilePath>
+            </File>
+            <File>
+              <FileName>STM32F407Exceptions.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\Source\STM32F407Exceptions.s</FilePath>
+            </File>
+            <File>
+              <FileName>SysTick.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\Source\SysTick.s</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

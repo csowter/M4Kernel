@@ -1,5 +1,5 @@
 _KernelStackSize = 0x200;
-_TaskStackSpace = 0x8000;
+_TaskStackSpace = 0x0200;
 
 MEMORY
 {
@@ -17,6 +17,7 @@ SECTIONS
 	{
 		. = ALIGN(4);
 		KEEP(*(.vector_table))
+		KEEP(*(.processor_exceptions))
 		. = ALIGN(4);
 	} > VECTORTABLE
 	
@@ -38,4 +39,20 @@ SECTIONS
 		_taskStackTop = .;
 		
 	} > CCMRAM
+	
+	.data : {
+		_DataStart = .;
+		*(.data);
+		. = ALIGN(4);
+		_DataEnd = .;
+	} >SRAM1 AT >FLASH
+	
+	_DataLoad = LOADADDR(.data);
+	
+	.bss (NOLOAD) : {
+		_BssStart = .;
+		*(.bss);
+		. = ALIGN(4);
+		_BssEnd = .;
+	} >SRAM1
 }
