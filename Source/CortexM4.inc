@@ -12,3 +12,6 @@
 .equ SysTick_LOAD	,0x04
 .equ SysTick_VAL	,0x08
 .equ SysTick_CALIB	,0x0c
+
+/* SCB offsets */
+.equ SCB_ICSR, 0x04

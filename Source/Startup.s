@@ -4,6 +4,7 @@
 .thumb
 
 .include "stm32f407.inc"
+.include "CortexM4.inc"
 
 .section .text
 .type Reset_Handler,%function
@@ -41,31 +42,58 @@ Reset_Handler:
 	orr r2, 0x08
 	str r2, [r0, r1]
 	dsb
-/* configure pin as out - PD15 - blue led */
+/* configure pin as out - PD15 - blue led, PD14 - red led */
 	ldr r0, =GPIOD
 	ldr r1, =GPIO_MODER
-	mov r2, 0x01
-	lsl r2, 30
+	mov r2, 0x05
+	lsl r2, 28
 	str r2, [r0, r1]
-	ldr r1, =GPIO_BSRR
-	mov r2, 0x01
-	lsl r2, 15
-	mov r3, r0
-	mov r4, #0 /* r4 is tick count at last toggle */
-	mov r5, #1000 /* r5 is flash period in ticks */
-	add r6, r4, r5 /* r6 is next toggle count */
-flashloop:
-	bl GetSysTickCount
-	cmp r0, r6
-	blt flashloop
-	mov r6, r0
-	add r6, r5
-	str r2, [r3, r1]
-	ror r2, 16
-	b flashloop
 	
+	ldr r1, =Task1Function
+	ldr r0, =_taskStackBottom
+	add r0, #100 /* 100 byte task stack*/
+	bl TaskCreate
+	ldr r1, =Task2Function
+	ldr r0, =_taskStackBottom
+	add r0, #200
+	bl TaskCreate
 	
-	
+	svc 0/* schedule first task */
+	b .
 	
 	b Reset_Handler
+	
+.type Task1Function, %function
+Task1Function:
+	mov r1, #500
+	mov r2, #0
+	mov r3, #0x01
+	lsl r3, #15
+	
+1:	bl GetSysTickCount
+	cmp r0, r2
+	blt 1b
+	mov r2, r0
+	add r2, r1
+	ldr r0, =GPIOD
+	str r3, [r0, #GPIO_BSRR]
+	ror r3, 16
+	b 1b
+	
+.type Task2Function, %function
+Task2Function:
+	mov r1, #100
+	mov r2, #0
+	mov r3, #0x01
+	lsl r3, #14
+	
+1:	bl GetSysTickCount
+	cmp r0, r2
+	blt 1b
+	mov r2, r0
+	add r2, r1
+	ldr r0, =GPIOD
+	str r3, [r0, #GPIO_BSRR]
+	ror r3, 16
+	b 1b
 	

@@ -59,6 +59,11 @@ SysTick_Handler:
 	ldr r1, [r0]
 	add r1, #1
 	str r1, [r0]
+	
+	ldr r0, =SCB_BASE
+	mov r1, 1
+	lsl r1, 28
+	str r1, [r0, SCB_ICSR] /* pend sv to task switch */
 
 	bx lr
 	

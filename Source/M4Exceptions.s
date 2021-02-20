@@ -63,6 +63,7 @@ SVC_Handler:
 DebugMon_Handler:
 	b DebugMon_Handler
 	
+.type PendSV_Handler, %function
 .weak PendSV_Handler
 PendSV_Handler:
 	b PendSV_Handler
