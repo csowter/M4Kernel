@@ -1,6 +1,6 @@
 .syntax unified
 .cpu cortex-m4
-.fpu softvfp
+.fpu fpv4-sp-d16
 .thumb
 
 .include "CortexM4.inc"
@@ -61,8 +61,7 @@ SysTick_Handler:
 	str r1, [r0]
 	
 	ldr r0, =SCB_BASE
-	mov r1, 1
-	lsl r1, 28
+	mov r1, #(0x01 << 28)
 	str r1, [r0, SCB_ICSR] /* pend sv to task switch */
 
 	bx lr
