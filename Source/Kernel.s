@@ -40,21 +40,25 @@ TaskCreate:
 	stmfd r0!, {r2} /* pc */
 	ldr r3, =TaskReturn
 	stmfd r0!, {r3} /* lr */
-	mov r3, #12
+	mov r3, #0
 	stmfd r0!, {r3} /* r12 */
-	mov r3, #3
 	stmfd r0!, {r3} /* r3 */
-	sub r3, #1
 	stmfd r0!, {r3} /* r2 */
-	sub r3, #1
 	stmfd r0!, {r3} /* r1 */
-	sub r3, #1
 	stmfd r0!, {r3} /* push r0 */
 	mvn r3, #0
 	sub r3, #2
 	stmfd r0!, {r3} /* software stacked lr, 0xfffffffd */
 
-	stmfd r0!, {r4-r11}	
+	mov r3, #0
+	stmfd r0!, {r3}	/* r11 */
+	stmfd r0!, {r3}	/* r10 */
+	stmfd r0!, {r3}	/* r9 */
+	stmfd r0!, {r3}	/* r8 */
+	stmfd r0!, {r3}	/* r7 */
+	stmfd r0!, {r3}	/* r6 */
+	stmfd r0!, {r3}	/* r5 */
+	stmfd r0!, {r3}	/* r4 */
 	
 	/* add stack pointer to tasks array */
 	ldr r1, =NextFreeTaskId
