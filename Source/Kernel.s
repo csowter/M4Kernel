@@ -1,7 +1,8 @@
 .syntax unified
 .cpu cortex-m4
-.fpu softvfp
+.fpu fpv4-sp-d16
 .thumb
+
 
 .equ NumberOfTasks, 10
 .equ TaskShift, 2
@@ -76,6 +77,11 @@ TaskCreate:
 PendSV_Handler:
 	cpsid i
 	mrs r3, psp /* get psp */
+	
+	tst lr, #0x00000010 /* was this a floating point context? */
+	it      eq
+	vstmdbeq  r3!, {s16-s31} /* stack fpu registers not done by hardware */
+	
 	stmfd r3!, {r4-r11, lr}
 	
 	ldr r0, =TaskStacks
@@ -91,6 +97,11 @@ PendSV_Handler:
 	strb r1, [r2]
 	ldr r0, [r0, r1, LSL #TaskShift] /* load next task stack pointer into r0 */
 	ldmfd r0!, {r4-r11, lr}
+	
+	tst     lr, #0x00000010 /* do we need to restore floating point context? */
+	it      eq
+	vldmiaeq  r0!,      {s16-s31}
+	
 	msr psp, r0 /* set next task stack pointer in psp */
 	cpsie i
 	bx lr

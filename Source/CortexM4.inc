@@ -15,3 +15,6 @@
 
 /* SCB offsets */
 .equ SCB_ICSR, 0x04
+
+/* FPU */
+.equ SCB_CPACR, 0xE000ED88

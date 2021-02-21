@@ -1,6 +1,6 @@
 .syntax unified
 .cpu cortex-m4
-.fpu softvfp
+.fpu fpv4-sp-d16
 .thumb
 
 .include "stm32f407.inc"
@@ -10,6 +10,11 @@
 .type Reset_Handler,%function
 .globl Reset_Handler
 Reset_Handler:
+/* enable fpu */
+	ldr r0, =SCB_CPACR
+	mov r1, #0x0f
+	lsl r1, #20
+	str r1, [r0]
 /* fill in data memory */
 	ldr r0, =_DataStart
 	ldr r1, =_DataEnd
@@ -85,7 +90,7 @@ Task1Function:
 	mov r9, r4
 	mov r10, r4
 	mov r11, #0xca
-	
+	vadd.f32 s4, s6, s7
 1:	bl GetSysTickCount
 	cmp r0, r2
 	blt 1b
