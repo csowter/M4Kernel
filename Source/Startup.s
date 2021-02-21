@@ -45,8 +45,8 @@ Reset_Handler:
 /* configure pin as out - PD15 - blue led, PD14 - red led */
 	ldr r0, =GPIOD
 	ldr r1, =GPIO_MODER
-	mov r2, 0x05
-	lsl r2, 28
+	mov r2, 0x55
+	lsl r2, 24
 	str r2, [r0, r1]
 	
 	ldr r1, =Task1Function
@@ -56,6 +56,14 @@ Reset_Handler:
 	ldr r1, =Task2Function
 	ldr r0, =_taskStackBottom
 	add r0, #200
+	bl TaskCreate
+	ldr r1, =Task3Function
+	ldr r0, =_taskStackBottom
+	add r0, #300
+	bl TaskCreate
+	ldr r1, =Task4Function
+	ldr r0, =_taskStackBottom
+	add r0, #400
 	bl TaskCreate
 	
 	svc 0/* schedule first task */
@@ -94,6 +102,56 @@ Task2Function:
 	mov r2, #0
 	mov r3, #0x01
 	lsl r3, #14
+	mov r4, #0x55
+	mov r5, r4
+	mov r6, r4
+	mov r7, r4
+	mov r8, r4
+	mov r9, r4
+	mov r10, r4
+	mov r11, #0xdd
+	
+1:	bl GetSysTickCount
+	cmp r0, r2
+	blt 1b
+	mov r2, r0
+	add r2, r1
+	ldr r0, =GPIOD
+	str r3, [r0, #GPIO_BSRR]
+	ror r3, 16
+	b 1b
+	
+.type Task3Function, %function
+Task3Function:
+	mov r1, #250
+	mov r2, #0
+	mov r3, #0x01
+	lsl r3, #13
+	mov r4, #0x55
+	mov r5, r4
+	mov r6, r4
+	mov r7, r4
+	mov r8, r4
+	mov r9, r4
+	mov r10, r4
+	mov r11, #0xdd
+	
+1:	bl GetSysTickCount
+	cmp r0, r2
+	blt 1b
+	mov r2, r0
+	add r2, r1
+	ldr r0, =GPIOD
+	str r3, [r0, #GPIO_BSRR]
+	ror r3, 16
+	b 1b
+	
+.type Task4Function, %function
+Task4Function:
+	mov r1, #1000
+	mov r2, #0
+	mov r3, #0x01
+	lsl r3, #12
 	mov r4, #0x55
 	mov r5, r4
 	mov r6, r4
