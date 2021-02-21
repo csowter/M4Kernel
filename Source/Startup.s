@@ -69,6 +69,14 @@ Task1Function:
 	mov r2, #0
 	mov r3, #0x01
 	lsl r3, #15
+	mov r4, #0xaa
+	mov r5, r4
+	mov r6, r4
+	mov r7, r4
+	mov r8, r4
+	mov r9, r4
+	mov r10, r4
+	mov r11, #0xca
 	
 1:	bl GetSysTickCount
 	cmp r0, r2
@@ -86,6 +94,14 @@ Task2Function:
 	mov r2, #0
 	mov r3, #0x01
 	lsl r3, #14
+	mov r4, #0x55
+	mov r5, r4
+	mov r6, r4
+	mov r7, r4
+	mov r8, r4
+	mov r9, r4
+	mov r10, r4
+	mov r11, #0xdd
 	
 1:	bl GetSysTickCount
 	cmp r0, r2

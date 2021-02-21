@@ -50,10 +50,11 @@ TaskCreate:
 	stmfd r0!, {r3} /* r1 */
 	sub r3, #1
 	stmfd r0!, {r3} /* push r0 */
-		
 	mvn r3, #0
 	sub r3, #2
 	stmfd r0!, {r3} /* software stacked lr, 0xfffffffd */
+
+	stmfd r0!, {r4-r11}	
 	
 	/* add stack pointer to tasks array */
 	ldr r1, =NextFreeTaskId
@@ -71,17 +72,21 @@ TaskCreate:
 PendSV_Handler:
 	cpsid i
 	mrs r3, psp /* get psp */
-	stmfd r3!, {lr}
+	stmfd r3!, {r4-r11, lr}
 	
 	ldr r0, =TaskStacks
 	ldr r2, =CurrentTaskId
 	ldrb r1, [r2]
 	str r3, [r0, r1, LSL #TaskShift] /* write current stack pointer to tasks array */
 	add r1, 1 /* increment task id */
-	and r1, 1 /* modulo 1 (TODO active task count ) */
-	str r1, [r2]
+	ldr r3, =NextFreeTaskId
+	ldrb r3, [r3]
+	cmp r1, r3
+	it eq /* have we serviced all tasks */
+	moveq r1, 0  /* reset next task to 0 */
+	strb r1, [r2]
 	ldr r0, [r0, r1, LSL #TaskShift] /* load next task stack pointer into r0 */
-	ldmfd r0!, {lr} /* pop lr for exception return type */
+	ldmfd r0!, {r4-r11, lr}
 	msr psp, r0 /* set next task stack pointer in psp */
 	cpsie i
 	bx lr
@@ -94,7 +99,7 @@ SVC_Handler:
 	ldr r1, =CurrentTaskId
 	ldrb r1, [r1]
 	ldr r0, [r0, r1, LSL #TaskShift]
-	ldmfd r0!, {lr}
+	ldmfd r0!, {r4-r11, lr}
 	
 	msr psp, r0
 	cpsie i
