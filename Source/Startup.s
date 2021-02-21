@@ -39,11 +39,6 @@ Reset_Handler:
 2:	cmp r0, r1 /* have we cleared it all? */
 	blo 1b /* no, loop */
 	
-/*configure systick 1 ms period*/
-	ldr r0, =#16000000 /* clock speed hz */
-	mov r1, #1 /* 1 ms ticks */
-	bl InitialiseSysTick
-	
 /* enable clock for GPIOD */
 	ldr r0, =RCC
 	ldr r2, [r0, #RCC_AHB1ENR]
@@ -76,7 +71,13 @@ Reset_Handler:
 	add r0, #2048
 	bl TaskCreate	
 	
+	/*configure systick 1 ms period*/
+	ldr r0, =#16000000 /* clock speed hz */
+	mov r1, #1 /* 1 ms ticks */
+	bl InitialiseSysTick
+	
 	svc 0/* schedule first task */
+	
 	b .
 	
 	b Reset_Handler
