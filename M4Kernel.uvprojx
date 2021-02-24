@@ -313,6 +313,11 @@
               <FileType>2</FileType>
               <FilePath>.\Source\Kernel.s</FilePath>
             </File>
+            <File>
+              <FileName>Mutex.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\Source\Mutex.s</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

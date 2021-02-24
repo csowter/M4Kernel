@@ -6,6 +6,9 @@
 .include "stm32f407.inc"
 .include "CortexM4.inc"
 
+.section .bss
+mutex: .space 4
+
 .section .text
 .type Reset_Handler,%function
 .globl Reset_Handler
@@ -94,6 +97,11 @@ Task1Function:
 	blt 1b /* no */
 	mov r2, r0 /* yes, update next toggle time with current tick count */
 	add r2, r1 /* plus the tick period */
+	ldr r0, =mutex
+	push {r1-r3}
+	bl LockMutex
+	bl FreeMutex
+	pop {r1-r3}
 	ldr r0, =GPIOD
 	str r3, [r0, #GPIO_BSRR] /* write pin state to gpio bsrr */
 	ror r3, 16 /* rotate pin state by 16 bits ready for next toggle*/

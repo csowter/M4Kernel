@@ -123,7 +123,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGTARM</Key>
-          <Name>(1010=-1,-1,-1,-1,0)(1007=-1,-1,-1,-1,0)(1008=985,93,1361,329,0)(1009=301,131,559,719,0)(1012=242,426,719,741,0)</Name>
+          <Name>(1010=866,110,1316,667,0)(1007=160,360,347,635,0)(1008=985,93,1361,329,0)(1009=301,131,559,719,0)(1012=242,426,719,741,0)</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -150,6 +150,22 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
+          <LineNumber>17</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134218624</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>C:\Work\M4Kernel\Source\Startup.s</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\M4Kernel\Source/Startup.s\17</Expression>
+        </Bp>
+        <Bp>
+          <Number>1</Number>
+          <Type>0</Type>
           <LineNumber>32</LineNumber>
           <EnabledFlag>1</EnabledFlag>
           <Address>134218248</Address>
@@ -163,12 +179,28 @@
           <ExecCommand></ExecCommand>
           <Expression>\\M4Kernel\Source/M4Exceptions.s\32</Expression>
         </Bp>
+        <Bp>
+          <Number>2</Number>
+          <Type>0</Type>
+          <LineNumber>87</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134219058</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>C:\Work\M4Kernel\Source\Kernel.s</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\M4Kernel\Source/Kernel.s\87</Expression>
+        </Bp>
       </Breakpoint>
       <MemoryWindow1>
         <Mm>
           <WinNumber>1</WinNumber>
           <SubType>1</SubType>
-          <ItemText>0x10000244</ItemText>
+          <ItemText>0x20000000</ItemText>
           <AccSizeX>0</AccSizeX>
         </Mm>
       </MemoryWindow1>
@@ -218,6 +250,10 @@
         <Entry>
           <Name>System Viewer\RCC</Name>
           <WinId>35905</WinId>
+        </Entry>
+        <Entry>
+          <Name>System Viewer\SYSCFG</Name>
+          <WinId>35903</WinId>
         </Entry>
       </SystemViewers>
       <DebugDescription>
@@ -328,6 +364,18 @@
       <bDave2>0</bDave2>
       <PathWithFileName>.\Source\Kernel.s</PathWithFileName>
       <FilenameWithoutPath>Kernel.s</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>1</GroupNumber>
+      <FileNumber>9</FileNumber>
+      <FileType>2</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>.\Source\Mutex.s</PathWithFileName>
+      <FilenameWithoutPath>Mutex.s</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
