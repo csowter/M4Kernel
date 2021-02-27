@@ -57,21 +57,25 @@ Reset_Handler:
 	ldr r1, =Task1Function
 	ldr r0, =_taskStackBottom
 	add r0, #512 /* 512 byte task stack*/
+	mov r2, #512
 	bl TaskCreate
 	
 	ldr r1, =Task2Function
 	ldr r0, =_taskStackBottom
 	add r0, #1024
+	mov r2, #512
 	bl TaskCreate
 	
 	ldr r1, =Task3Function
 	ldr r0, =_taskStackBottom
 	add r0, #1536
+	mov r2, #512
 	bl TaskCreate
 	
 	ldr r1, =Task4Function
 	ldr r0, =_taskStackBottom
 	add r0, #2048
+	mov r2, #512
 	bl TaskCreate	
 	
 	/*configure systick 1 ms period*/
@@ -134,6 +138,7 @@ Task3Function:
 1:	bl GetSysTickCount /* get current timer count */
 	cmp r0, r2 /* do we need to toggle */ 
 	blt 1b /* no */
+	/* push {r0} uncomment this to test stack overflow checking */
 	mov r2, r0 /* yes, update next toggle time with current tick count */
 	add r2, r1 /* plus the tick period */
 	ldr r0, =GPIOD
