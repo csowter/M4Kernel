@@ -23,6 +23,22 @@ LockMutex:
 	dmb /* yes */
 	bx lr
 	
+/* TryLockMutex - Tries to lock mutex
+ * Arguments: r0 - Address of muted
+ * Return: 0 if success, 1 if fail
+ */
+.type TryLockMutex, %function
+.global TryLockMutex
+TryLockMutex:
+	mov r1, #MutexLocked
+	ldrex r2, [r0] /* read current mutex state */
+	cmp r2, #MutexLocked /* is it locked? */
+	itt eq 
+	moveq r0, #1 /* it is */
+	bxeq lr /* return 1 */
+	strex r0, r1, [r0] /* it wasn't, try to lock it */
+	bx lr	/* return whether it was successful */
+	
 /* FreeMutex
  * Arguments: r0 - Address of mutex
  * Return: none
